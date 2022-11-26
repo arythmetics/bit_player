@@ -1,4 +1,4 @@
-use std::fs::File;
+use std::{fs::File, io};
 use std::io::BufReader;
 use rodio::{Decoder, OutputStream, source::Source, Sink};
 
@@ -15,8 +15,13 @@ fn main() {
     // Decode that sound file into a source
     let source = Decoder::new(file).unwrap();
 
-    // Add the source to the sink
-    sink.append(source);
-    sink.sleep_until_end();
-   
+    let mut action = String::new();
+    println!("type 'play' if you want to play the song");
+    io::stdin().read_line(&mut action).expect("unrecognized action");
+
+    if action.trim_end() == "play" {
+        // Add the source to the sink
+        sink.append(source);
+        sink.sleep_until_end();
+    }
 }
