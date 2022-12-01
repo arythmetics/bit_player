@@ -22,6 +22,17 @@ fn main() {
     if action.trim_end() == "play" {
         // Add the source to the sink
         sink.append(source);
-        sink.sleep_until_end();
+        action.clear();
+
+        println!("type 'pause' if you want to pause the song");
+        io::stdin().read_line(&mut action).expect("unrecognized action");
+        println!("{}", action);
+
+        if action.trim_end() == "pause" {
+            println!("pause initiatied");
+            sink.pause()
+        }
     }
+
+    sink.sleep_until_end();
 }
