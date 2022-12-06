@@ -1,3 +1,4 @@
+use bit_player::control_song;
 use std::{fs::File, io};
 use std::io::{BufReader, Read};
 use rodio::{Decoder, OutputStream, source::Source, Sink};
@@ -22,30 +23,13 @@ fn main() {
     if action.trim_end() == "play" {
         // Add the source to the sink
         sink.append(source);
+        action.clear();
 
         loop {
-            if action.trim_end() == "play" {
-                action.clear();
-                println!("type 'pause' to pause the song");
-                io::stdin().read_line(&mut action).expect("unrecognized action");
-
-                if action.trim_end() == "pause" {
-                    sink.pause()
-                }
-            }
-            if action.trim_end() == "pause" {
-                action.clear();
-                println!("type 'play' to resume the song");
-                io::stdin().read_line(&mut action).expect("unrecognized action");
-
-                if action.trim_end() == "play" {
-                    sink.play()
-                }
-            }
-            else {
-                println!("unrecognized action, try again");
-                io::stdin().read_line(&mut action).expect("unrecognized action");
-            }
+            println!("input action (play/pause)");
+            io::stdin().read_line(&mut action).expect("unrecognized action");
+            control_song(&sink, &action.trim_end());
+            action.clear()
         }
     }
     sink.sleep_until_end();
