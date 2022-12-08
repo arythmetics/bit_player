@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 rodio = "0.16.0"
+dotenv = "0.15.0"
