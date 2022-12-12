@@ -8,7 +8,7 @@ pub fn control_song(queue: &Sink, action: &str) {
     if action == "play" {
         queue.play()
     }
-    if action == "pause" {
+    else if action == "pause" {
         queue.pause()
     }
     else {
